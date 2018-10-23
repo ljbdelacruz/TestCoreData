@@ -12,8 +12,6 @@ import SVProgressHUD;
 
 
 class ViewController: UIViewController {
-    
-    
     var tasks:[Task] = [];
     let context=(UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
     
@@ -100,10 +98,8 @@ extension ViewController:UISearchBarDelegate{
         let request:NSFetchRequest<Task>=Task.fetchRequest();
         //cd makes the case insensitive to match wether its lowercase or uppercase
         if searchBar.text!.count > 0 {
-            let predicate=NSPredicate(format: "taskname CONTAINS[cd] %@", searchBar.text!);
-            request.predicate=predicate;
-            let sorter=NSSortDescriptor(key: "taskname", ascending: true);
-            request.sortDescriptors=[sorter];
+            request.predicate=NSPredicate(format: "taskname CONTAINS[cd] %@", searchBar.text!);
+            request.sortDescriptors=[NSSortDescriptor(key: "taskname", ascending: true)];
             self.LoadData(request: request);
         }else{
             self.LoadAllData();
@@ -116,7 +112,6 @@ extension ViewController:UISearchBarDelegate{
         self.UISBarTask.endEditing(true);
     }
 }
-
 
 //MARK: -CoreDataMethods
 extension ViewController{
@@ -160,4 +155,3 @@ extension ViewController{
         self.UITableview.reloadData();
     }
 }
-
