@@ -10,9 +10,6 @@ import Foundation
 import CoreData
 
 class Task:NSManagedObject{
-    convenience init(){
-        self.init();
-    }
     func set(id:String, name:String, isDone:Bool){
         self.id=id;
         self.taskname=name;

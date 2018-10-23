@@ -12,6 +12,12 @@ import SVProgressHUD;
 
 
 class ViewController: UIViewController {
+    var taskCategory:Category?{
+        didSet{
+            //this will execute once this variable has been set
+            self.LoadData();
+        }
+    };
     var tasks:[Task] = [];
     let context=(UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
     
@@ -23,9 +29,6 @@ class ViewController: UIViewController {
         self.UITableview.delegate=self;
         self.UITableview.dataSource=self;
         self.UISBarTask.delegate=self;
-        
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask));
-        self.LoadData();
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -55,12 +58,12 @@ class ViewController: UIViewController {
             tf.placeholder="Taskname";
             taskNameTF=tf;
         })
-        let action=UIAlertAction(title: "Add Task", style: .default, handler: {
+        let action=UIAlertAction(title: "Add", style: .default, handler: {
             (action) in
             //action invoked when user added new item button
             self.SaveContent(taskName: taskNameTF!.text!);
         })
-        let cancelAction=UIAlertAction(title: "Add Task", style: .default, handler: {
+        let cancelAction=UIAlertAction(title: "Cancel", style: .default, handler: {
             (action) in
         })
         alert.addAction(action);
@@ -97,21 +100,20 @@ extension ViewController:UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count <= 0 {
             self.LoadData();
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder();
+            }
         }
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let request:NSFetchRequest<Task>=Task.fetchRequest();
         //cd makes the case insensitive to match wether its lowercase or uppercase
         if searchBar.text!.count > 0 {
-            request.predicate=NSPredicate(format: "taskname CONTAINS[cd] %@", searchBar.text!);
             request.sortDescriptors=[NSSortDescriptor(key: "taskname", ascending: true)];
-            self.LoadData(request: request);
+            self.LoadData(request: request, addOnPredicate: NSPredicate(format: "taskname CONTAINS[cd] %@", searchBar.text!));
         }else{
             self.LoadData();
         }
-    }
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.LoadData();
     }
     func EndSearchEdit(){
         self.UISBarTask.endEditing(true);
@@ -120,10 +122,10 @@ extension ViewController:UISearchBarDelegate{
 
 //MARK: -CoreDataMethods
 extension ViewController{
-    //customFunc
     func SaveContent(taskName:String){
         let newTask=Task(context: self.context);
         newTask.set(id: "", name: taskName, isDone:false);
+        newTask.parentCategory=self.taskCategory!;
         self.tasks.append(newTask);
         self.UpdateContent();
     }
@@ -134,7 +136,7 @@ extension ViewController{
             }
         }
         self.UpdateContent();
-        self.LoadData();
+        self.LoadData()
     }
     func UpdateContent(){
         do{
@@ -144,7 +146,11 @@ extension ViewController{
         }
         self.UITableview.reloadData();
     }
-    func LoadData(request:NSFetchRequest<Task> = Task.fetchRequest()){
+    
+    //
+    func LoadData(request:NSFetchRequest<Task> = Task.fetchRequest(), addOnPredicate:NSPredicate? = nil){
+        let pred=NSPredicate(format: "parentCategory.name MATCHES %@", self.taskCategory!.name!);
+        request.predicate = addOnPredicate != nil ? NSCompoundPredicate(andPredicateWithSubpredicates: [pred, addOnPredicate!]) : pred;
         SVProgressHUD.show();
         do{
             self.tasks=try context.fetch(request);
@@ -152,6 +158,7 @@ extension ViewController{
             print("has error \(error.localizedDescription)");
         }
         SVProgressHUD.dismiss();
-        self.UITableview.reloadData();
+        self.UITableview != nil ? self.UITableview.reloadData() : nil;
+        
     }
 }

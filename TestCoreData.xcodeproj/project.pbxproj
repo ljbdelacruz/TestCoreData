@@ -15,6 +15,8 @@
 		6F93B989217D452900A23E65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F93B987217D452900A23E65 /* LaunchScreen.storyboard */; };
 		6F93B994217D47DC00A23E65 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F93B993217D47DC00A23E65 /* Task.swift */; };
 		6F93B99C217E91B800A23E65 /* Custom in Resources */ = {isa = PBXBuildFile; fileRef = 6F93B99B217E91B800A23E65 /* Custom */; };
+		6F93B9A1217EEEED00A23E65 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F93B9A0217EEEED00A23E65 /* CategoryViewController.swift */; };
+		6F93B9A3217EEFC100A23E65 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F93B9A2217EEFC100A23E65 /* Category.swift */; };
 		B014D631869F2275CE5C35E5 /* Pods_TestCoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC12F4A71669EDFC55522DE /* Pods_TestCoreData.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +32,8 @@
 		6F93B98A217D452900A23E65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F93B993217D47DC00A23E65 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		6F93B99B217E91B800A23E65 /* Custom */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Custom; sourceTree = "<group>"; };
+		6F93B9A0217EEEED00A23E65 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		6F93B9A2217EEFC100A23E65 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		8EFB7D80B2F0C09E3EBB79CB /* Pods-TestCoreData.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestCoreData.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestCoreData/Pods-TestCoreData.debug.xcconfig"; sourceTree = "<group>"; };
 		EA34B5C1AD6E37427FB8891F /* Pods-TestCoreData.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestCoreData.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestCoreData/Pods-TestCoreData.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,10 +80,10 @@
 		6F93B97A217D452800A23E65 /* TestCoreData */ = {
 			isa = PBXGroup;
 			children = (
+				6F93B99D217EEDEC00A23E65 /* ViewController */,
 				6F93B99B217E91B800A23E65 /* Custom */,
 				6F93B992217D473600A23E65 /* Models */,
 				6F93B97B217D452800A23E65 /* AppDelegate.swift */,
-				6F93B97D217D452800A23E65 /* ViewController.swift */,
 				6F93B97F217D452800A23E65 /* Main.storyboard */,
 				6F93B985217D452900A23E65 /* Assets.xcassets */,
 				6F93B987217D452900A23E65 /* LaunchScreen.storyboard */,
@@ -93,8 +97,18 @@
 			isa = PBXGroup;
 			children = (
 				6F93B993217D47DC00A23E65 /* Task.swift */,
+				6F93B9A2217EEFC100A23E65 /* Category.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		6F93B99D217EEDEC00A23E65 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6F93B97D217D452800A23E65 /* ViewController.swift */,
+				6F93B9A0217EEEED00A23E65 /* CategoryViewController.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		E75238062D6080E55CE8898D /* Frameworks */ = {
@@ -218,10 +232,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F93B9A1217EEEED00A23E65 /* CategoryViewController.swift in Sources */,
 				6F93B97E217D452800A23E65 /* ViewController.swift in Sources */,
 				6F93B994217D47DC00A23E65 /* Task.swift in Sources */,
 				6F93B984217D452800A23E65 /* TestCoreData.xcdatamodeld in Sources */,
 				6F93B97C217D452800A23E65 /* AppDelegate.swift in Sources */,
+				6F93B9A3217EEFC100A23E65 /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,7 +385,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 93CXP6R5M8;
 				INFOPLIST_FILE = TestCoreData/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ljbdelacruz.TestCoreData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -385,7 +404,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 93CXP6R5M8;
 				INFOPLIST_FILE = TestCoreData/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.ljbdelacruz.TestCoreData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
