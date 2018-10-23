@@ -94,6 +94,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
 
 //MARK:- Searchbar methods
 extension ViewController:UISearchBarDelegate{
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count <= 0 {
+            self.LoadData();
+        }
+    }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let request:NSFetchRequest<Task>=Task.fetchRequest();
         //cd makes the case insensitive to match wether its lowercase or uppercase
