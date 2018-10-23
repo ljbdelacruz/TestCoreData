@@ -17,7 +17,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let context=(UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
     
     @IBOutlet weak var UITableview: UITableView!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +30,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    //customFunc
     func SaveContent(taskName:String){
         let newTask=Task(context: self.context);
         newTask.set(id: "", name: taskName, isDone:false);
@@ -54,7 +54,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         self.UITableview.reloadData();
     }
-    
     func LoadData(){
         let request:NSFetchRequest<Task>=Task.fetchRequest();
         do{
@@ -66,6 +65,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         SVProgressHUD.dismiss();
         self.UITableview.reloadData();
     }
+    //tableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tasks.count;
     }
@@ -81,6 +81,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.UpdateContent();
     }
     
+    //BtnEvents
     @IBAction func DeleteCompleteOnClick(_ sender: Any) {
         let alert=UIAlertController(title: "Remove Complete Task", message: "Are you sure you want to remove it?", preferredStyle: .alert)
         let yesAction=UIAlertAction(title: "Yes", style: .default, handler: {
@@ -107,7 +108,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             //action invoked when user added new item button
             self.SaveContent(taskName: taskNameTF!.text!);
         })
+        let cancelAction=UIAlertAction(title: "Add Task", style: .default, handler: {
+            (action) in
+        })
         alert.addAction(action);
+        alert.addAction(cancelAction);
         present(alert, animated: true, completion: nil)
     }
     
