@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         self.UISBarTask.delegate=self;
         
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask));
-        self.LoadAllData();
+        self.LoadData();
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -102,11 +102,11 @@ extension ViewController:UISearchBarDelegate{
             request.sortDescriptors=[NSSortDescriptor(key: "taskname", ascending: true)];
             self.LoadData(request: request);
         }else{
-            self.LoadAllData();
+            self.LoadData();
         }
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.LoadAllData();
+        self.LoadData();
     }
     func EndSearchEdit(){
         self.UISBarTask.endEditing(true);
@@ -129,7 +129,7 @@ extension ViewController{
             }
         }
         self.UpdateContent();
-        self.LoadAllData();
+        self.LoadData();
     }
     func UpdateContent(){
         do{
@@ -139,12 +139,7 @@ extension ViewController{
         }
         self.UITableview.reloadData();
     }
-    func LoadAllData(){
-        let request:NSFetchRequest<Task>=Task.fetchRequest();
-        self.LoadData(request: request);
-    }
-    
-    func LoadData(request:NSFetchRequest<Task>){
+    func LoadData(request:NSFetchRequest<Task> = Task.fetchRequest()){
         SVProgressHUD.show();
         do{
             self.tasks=try context.fetch(request);
