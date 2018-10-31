@@ -10,13 +10,9 @@ import UIKit
 import CoreData
 
 class CategoryViewController: UIViewController, UIApplicationDelegate {
-
-    
     let context=(UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext;
-    
     @IBOutlet weak var UICategoryTV: UITableView!
     @IBOutlet weak var UISearchBarCategory: UISearchBar!
-    
     var taskCategories:[Category]=[];
     var selectedTaskCategory:Category?;
     override func viewDidLoad() {
@@ -55,6 +51,10 @@ class CategoryViewController: UIViewController, UIApplicationDelegate {
     }
     
 }
+
+
+
+
 
 //MARK: -CoreData Functionality
 extension CategoryViewController{
